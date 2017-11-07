@@ -39,10 +39,17 @@ extern const struct zeroitem
 } *__zero_addr;
 extern uint32_t __zero_size;
 
-__attribute__((noreturn)) void __start(void);
+__attribute__((noreturn)) extern void _start(void);
 
 __attribute__((noreturn)) void Reset_IRQHandler(void)
 {
+	SystemInit();
+
+	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGCOMPEN;
+	__DSB();
+	SET_FIELD(SYSCFG->CFGR1, SYSCFG_CFGR1_MEM_MODE, 0x3);
+	__DSB();
+
 	uint32_t count = __copy_size / sizeof(struct copyitem);
 	for (uint32_t idx = 0; idx < count; idx++)
 	{
@@ -57,7 +64,9 @@ __attribute__((noreturn)) void Reset_IRQHandler(void)
 		memset(item->dst, 0, item->size);
 	}
 
-	for (;;);
+	SystemCoreClockUpdate();
+
+	_start();
 }
 
 #define DHCSR (*((volatile uint32_t *)0xe000edf0))
