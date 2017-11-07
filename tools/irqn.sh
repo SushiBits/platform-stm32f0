@@ -19,7 +19,7 @@ for idx in $(seq -14 $COUNT); do
     if [ "$LINE" != "" ]; then
         echo $LINE | sed -E "s/([0-9\-]*) (.*)/IRQN_HANDLER(\1, \2)/"
     else
-        echo SKIP_HANLDER\($idx\)
+        echo SKIP_HANDLER\($idx\)
     fi
 done
 

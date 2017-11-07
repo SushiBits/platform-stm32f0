@@ -9,8 +9,8 @@
 
 extern void (*ISR_Vector[])(void);
 
-#define IRQN_HANDLER(id, name) extern void name ##_IRQHandler(void);
-#define SKIP_HANDLER(id)
+#define IRQN_HANDLER(irqn, name) extern void name ##_IRQHandler(void);
+#define SKIP_HANDLER(irqn)
 #include <stm32f0xx_handler.h>
 #undef IRQN_HANDLER
 #undef SKIP_HANDLER

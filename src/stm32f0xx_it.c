@@ -13,12 +13,12 @@
 void __stack(void);
 void Reset_IRQHandler(void);
 
-void (*ISR_Vector[])(void) =
+__attribute__((section(".vector"))) void (*ISR_Vector[])(void) =
 {
 		__stack,
 		Reset_IRQHandler,
-#define IRQN_HANDLER(id, name) name ##_IRQHandler,
-#define SKIP_HANDLER(id) NULL,
+#define IRQN_HANDLER(irqn, name) name ##_IRQHandler,
+#define SKIP_HANDLER(irqn) NULL,
 #include <stm32f0xx_handler.h>
 #undef IRQN_HANDLER
 #undef SKIP_HANDLER
@@ -84,8 +84,8 @@ __attribute__((noreturn)) void _exit(int status)
 		__WFE();
 }
 
-#define IRQN_HANDLER(id, name) __attribute__((weak, alias("Defualt_IRQHandler"))) void name ##_IRQHandler(void);
-#define SKIP_HANDLER(id)
+#define IRQN_HANDLER(irqn, name) __attribute__((weak, alias("Default_IRQHandler"))) void name ##_IRQHandler(void);
+#define SKIP_HANDLER(irqn)
 #include <stm32f0xx_handler.h>
 #undef IRQN_HANDLER
 #undef SKIP_HANDLER
