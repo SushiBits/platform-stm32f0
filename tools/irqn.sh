@@ -17,7 +17,7 @@ COUNT=$(echo "$LIST" | tail -n1 | cut -d " " -f1)
 for idx in $(seq -14 $COUNT); do
     LINE="$(echo "$LIST" | egrep -- "^$idx ")"
     if [ "$LINE" != "" ]; then
-        echo $LINE | sed -E "s/([0-9\-]*) (.*)/IRQN_HANDLER(\1, \2_IRQn)/"
+        echo $LINE | sed -E "s/([0-9\-]*) (.*)/IRQN_HANDLER(\1, \2)/"
     else
         echo SKIP_HANLDER\($idx\)
     fi
