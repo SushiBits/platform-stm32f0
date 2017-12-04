@@ -10,3 +10,6 @@ MEMORY
 	IROM    (r x) : ORIGIN = 0x08000000, LENGTH = 16k
 	IRAM    (rwx) : ORIGIN = 0x20000000, LENGTH = 4k
 }
+
+INCLUDE cortex-m0.ld
+
