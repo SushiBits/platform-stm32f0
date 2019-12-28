@@ -71,7 +71,7 @@ __attribute__((noreturn)) void Reset_IRQHandler(void)
 
 #define DHCSR (*((volatile uint32_t *)0xe000edf0))
 
-__attribute__((noreturn)) void Default_IRQHandler(void)
+void Default_IRQHandler(void)
 {
 	if (DHCSR & 1)
 		__BKPT(0);
